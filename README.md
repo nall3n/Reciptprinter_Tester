@@ -1,2 +1,2 @@
 # Reciptprinter_Tester
-A python ap for stress testin
+A python app for stress testin
