@@ -1,5 +1,6 @@
 from escpos.printer import Serial
 
+from tkinter import *
 
 p = Serial(devfile="COM1", 
 baudrate=19200, 
@@ -19,3 +20,28 @@ while i < 10:
   p.barcode('1324354657687', 'EAN13', 48, 2, '', '')
   p.cut()
   i += 1
+
+
+
+def run_test():
+  pass
+
+
+tk_font_size = 12 
+
+root = Tk()
+root.title("PRINTER TESTER!!!!!")
+root.geometry('600x500')
+
+
+baud_listbox = Listbox(root, selectmode=SINGEL,)
+
+baud_listbox.insert(1,)
+
+
+
+
+
+
+
+
