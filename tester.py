@@ -56,7 +56,7 @@ tk_font = 'Times'
 
 root = Tk()
 root.title("PRINTER TESTER!!!!!")
-root.geometry('600x500')
+root.geometry('400x500')
 
 # Port entry =================================
 port_lbl = Label(
