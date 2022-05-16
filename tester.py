@@ -49,7 +49,6 @@ def run_test():
   serial = port.get()
   run = int(loop.get())
 
-
   print(baudrate)
   print(serial)
 
@@ -73,6 +72,9 @@ def run_test():
     p.cut()
     i += 1
 
+
+def test2(p:Serial):
+  pass
 
 #=============================================================================
 
