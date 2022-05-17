@@ -49,6 +49,8 @@ def run_test():
   serial = port.get()
   run = int(loop.get())
 
+  test = tests_listbox.curselection()
+  print(test)
   print(baudrate)
   print(serial)
 
@@ -135,6 +137,26 @@ loop.insert(END, 10)
 loop.grid(column=4, row=0)
 #=============================================
 
+# Select test type List box ==================
+tests_listbox = Listbox(root,
+  selectmode=SINGLE,
+  width=20,
+)
+tests_listbox.insert(1,"TEXT PRINT")
+tests_listbox.insert(2,"FEED AND CUT TEST")
+tests_listbox.insert(3,"ööö")
+
+tests_listbox.grid(column=3, row=1,columnspan=2,)
+
+error_lbl = Label(
+  root, 
+  text='',
+  font=(tk_font,tk_font_size),
+)
+error_lbl.grid(column=3,row=10)
+#=============================================
+
+
 # Run test button ============================
 test_btn = Button(
   root,
@@ -158,5 +180,8 @@ save_btn = Button(
 )
 save_btn.grid(column=1, row=10, pady=5)
 #=============================================
+
+
+
 
 root.mainloop()
