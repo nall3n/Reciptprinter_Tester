@@ -1,4 +1,5 @@
 
+from distutils.log import error
 from turtle import width
 from escpos.printer import Serial
 
@@ -48,9 +49,9 @@ def run_test():
   baudrate=baud_var.get()
   serial = port.get()
   run = int(loop.get())
+  test = tests_listbox.curselection()[0]
 
-  test = tests_listbox.curselection()
-  print(test)
+
   print(baudrate)
   print(serial)
 
@@ -64,7 +65,22 @@ def run_test():
     xonxoff=standard_xonxoff, 
     dsrdtr=1)
 
-  i=0
+  if test == 0:
+    test_print(p, run)
+    print("Running test 1")
+  elif test == 1:
+    test_feed_and_cut(p, run)
+    print("Running test 2")
+  elif test == 2:
+    print("Running test 3")
+  else: 
+    error_txt.set("Plz input correct test")
+
+
+
+def test_print(p:Serial, run:int):
+  
+  i = 0
   while i < run:
     p.text("HAJHAJ")
     p.text("HASEIFHEAIOUHAOawdaauwf hyiuef eiufheif eif uef h\n waiodjaiwdiowadj")
@@ -74,9 +90,12 @@ def run_test():
     p.cut()
     i += 1
 
+def test_feed_and_cut(p:Serial, run:int):
 
-def test2(p:Serial):
-  pass
+  i = 0
+  while i < run:
+    p.ln(7)
+    p.cut()
 
 #=============================================================================
 
@@ -118,7 +137,6 @@ baud_var = StringVar(root)
 baud_var.set(baudrate_list[standard_baud])
 baud_opt = OptionMenu(root, baud_var, *baudrate_list)
 baud_opt.grid(column=2, row=1, pady=5)
-
 #=============================================
 
 # Loop counter input =========================
@@ -142,18 +160,21 @@ tests_listbox = Listbox(root,
   selectmode=SINGLE,
   width=20,
 )
-tests_listbox.insert(1,"TEXT PRINT")
-tests_listbox.insert(2,"FEED AND CUT TEST")
-tests_listbox.insert(3,"ööö")
+tests_listbox.insert(0,"TEXT PRINT")
+tests_listbox.insert(1,"FEED AND CUT TEST")
+tests_listbox.insert(2,"ööö")
 
 tests_listbox.grid(column=3, row=1,columnspan=2,)
-
+#=============================================
+# Error display lable ========================
+error_txt = StringVar()
+error_txt.set('')
 error_lbl = Label(
   root, 
-  text='',
+  textvariable=error_txt,
   font=(tk_font,tk_font_size),
 )
-error_lbl.grid(column=3,row=10)
+error_lbl.grid(column=3,row=10, columnspan=2)
 #=============================================
 
 
