@@ -1,6 +1,4 @@
 
-from distutils.log import error
-from turtle import width
 from escpos.printer import Serial
 
 from tkinter import *
@@ -28,12 +26,12 @@ baudrate_list = [
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-standard_baud = int(config['SERIAL']['Baudrate'])
-standard_port = config['SERIAL']['Port']
+standard_baud =     int(config['SERIAL']['Baudrate'])
+standard_port =     config['SERIAL']['Port']
 standard_bytesize = int(config['SERIAL']['bytesize'])
-standard_parity = config['SERIAL']['parity']
+standard_parity =   config['SERIAL']['parity']
 standard_stopbits = int(config['SERIAL']['stopbits'])
-standard_xonxoff = int(config['SERIAL']['xonxoff'])
+standard_xonxoff =  int(config['SERIAL']['xonxoff'])
 #===================================================
 
 def save_serial_config():
@@ -50,7 +48,6 @@ def run_test():
   serial = port.get()
   run = int(loop.get())
   test = tests_listbox.curselection()[0]
-
 
   print(baudrate)
   print(serial)
@@ -72,10 +69,12 @@ def run_test():
     test_feed_and_cut(p, run)
     print("Running test 2")
   elif test == 2:
+    test_qr_code(p, run)
     print("Running test 3")
   else: 
     error_txt.set("Plz input correct test")
 
+  print("Test done")
 
 
 def test_print(p:Serial, run:int):
@@ -94,8 +93,19 @@ def test_feed_and_cut(p:Serial, run:int):
 
   i = 0
   while i < run:
-    p.ln(7)
+    p.text(' ')
     p.cut()
+    i += 1
+
+
+def test_qr_code(p:Serial, run:int):
+  i = 0
+
+  while i < run:
+    p.qr(content="http://notes.nallen.tech", ec=0, size=16, model=2, native=False)
+    p.text('QR Test')
+    p.cut()
+    i += 1
 
 #=============================================================================
 
@@ -162,10 +172,11 @@ tests_listbox = Listbox(root,
 )
 tests_listbox.insert(0,"TEXT PRINT")
 tests_listbox.insert(1,"FEED AND CUT TEST")
-tests_listbox.insert(2,"ööö")
+tests_listbox.insert(2,"TEST QR CODE")
 
 tests_listbox.grid(column=3, row=1,columnspan=2,)
 #=============================================
+
 # Error display lable ========================
 error_txt = StringVar()
 error_txt.set('')
@@ -201,8 +212,5 @@ save_btn = Button(
 )
 save_btn.grid(column=1, row=10, pady=5)
 #=============================================
-
-
-
 
 root.mainloop()
