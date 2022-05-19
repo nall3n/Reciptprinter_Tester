@@ -47,7 +47,10 @@ def run_test():
   baudrate=baud_var.get()
   serial = port.get()
   run = int(loop.get())
-  test = tests_listbox.curselection()[0]
+  try:
+    test = tests_listbox.curselection()[0]
+  except:
+    test = 9999
 
   print(baudrate)
   print(serial)
@@ -63,14 +66,14 @@ def run_test():
     dsrdtr=1)
 
   if test == 0:
-    test_print(p, run)
     print("Running test 1")
+    test_print(p, run)
   elif test == 1:
-    test_feed_and_cut(p, run)
     print("Running test 2")
+    test_feed_and_cut(p, run)
   elif test == 2:
-    test_qr_code(p, run)
     print("Running test 3")
+    test_qr_code(p, run)
   else: 
     error_txt.set("Plz input correct test")
 
@@ -81,10 +84,14 @@ def test_print(p:Serial, run:int):
   
   i = 0
   while i < run:
-    p.text("HAJHAJ")
-    p.text("HASEIFHEAIOUHAOawdaauwf hyiuef eiufheif eif uef h\n waiodjaiwdiowadj")
-    p.text("HASEIFHEAIOUHAOawdaauwf hyiuef eiufheif eif uef h\n waiodjaiwdiowadj")
-    p.text("HASEIFHEAIOUHAOawdaauwf hyiuef eiufheif eif uef h\n waiodjaiwdiowadj")
+    p.text("ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ ")
+    p.text('abcdefghijklmnopqrstuvwxyzåäö ')
+    p.text('1234567890 ')
+    p.text(',;.:-_*^¨!"#¤%&/()=?`` ')
+    p.text("ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ ")
+    p.text('abcdefghijklmnopqrstuvwxyzåäö ')
+    p.text('1234567890 ')
+    p.text(',;.:-_*^¨!"#¤%&/()=?``')
     p.barcode('1324354657687', 'EAN13', 48, 2, '', '')
     p.cut()
     i += 1
