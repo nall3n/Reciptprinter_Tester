@@ -75,13 +75,12 @@ def run_test():
     print("Running test 3")
     test_qr_code(p, run)
   else: 
-    error_txt.set("Plz input correct test")
+    error_txt.set("Plz select a test type")
 
   print("Test done")
 
 
 def test_print(p:Serial, run:int):
-  
   i = 0
   while i < run:
     p.text("ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ ")
@@ -97,7 +96,6 @@ def test_print(p:Serial, run:int):
     i += 1
 
 def test_feed_and_cut(p:Serial, run:int):
-
   i = 0
   while i < run:
     p.text(' ')
@@ -107,7 +105,6 @@ def test_feed_and_cut(p:Serial, run:int):
 
 def test_qr_code(p:Serial, run:int):
   i = 0
-
   while i < run:
     p.qr(content="http://notes.nallen.tech", ec=0, size=16, model=2, native=False)
     p.text('QR Test')
