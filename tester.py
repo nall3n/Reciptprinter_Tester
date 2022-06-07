@@ -1,6 +1,7 @@
 
 from escpos.printer import Serial
 
+from time import sleep
 from tkinter import *
 
 import configparser
@@ -93,12 +94,14 @@ def test_print(p:Serial, run:int):
     p.text(',;.:-_*^¨!"#¤%&/()=?``')
     p.barcode('1324354657687', 'EAN13', 48, 2, '', '')
     p.cut()
+    p.l
     i += 1
 
 def test_feed_and_cut(p:Serial, run:int):
   i = 0
   while i < run:
-    p.text(' ')
+    sleep(1)
+    p.text('\n \n \n')
     p.cut()
     i += 1
 
